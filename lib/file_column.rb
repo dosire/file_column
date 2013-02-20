@@ -349,7 +349,6 @@ module FileColumn # :nodoc:
       @dir = File.join(store_dir, relative_path_prefix)
       @filename = @instance[@attr]
       @filename = nil if @filename.empty?
-			FileUtils.mkpath(File.dirname(@dir)) unless File.exists?(File.dirname(@dir))
     end
 
     def move_from(local_dir, just_uploaded)
@@ -397,7 +396,7 @@ module FileColumn # :nodoc:
     
     def relative_path_prefix
       raise RuntimeError.new("Trying to access file_column, but primary key got lost.") if @instance.id.to_s.empty?
-      File.join(*("%08d" % @instance.id).scan(/..../))
+      @instance.id.to_s
     end
   end
     
